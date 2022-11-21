@@ -4,11 +4,11 @@ import java.util.List;
 public class Field {
   private int value = 0;
   private List<Integer> domain;
-  private List<Field> neighbours; //A list of all fields that this field is constrained by
+  private List<Field> neighbours; // A list of all fields that this field is constrained by
 
   /*
    * ==============
-   *  CONSTRUCTORS
+   * CONSTRUCTORS
    * ==============
    */
 
@@ -23,11 +23,17 @@ public class Field {
   Field(int initValue) {
     this.value = initValue;
     this.domain = new ArrayList<>();
+    this.domain.add(this.value);
+  }
+
+  Field(Field field) {
+    this.value = field.getValue();
+    this.domain = new ArrayList<>(field.getDomain());
   }
 
   /*
    * =================
-   *  VALUE FUNCTIONS
+   * VALUE FUNCTIONS
    * =================
    */
   public int getValue() {
@@ -40,7 +46,7 @@ public class Field {
 
   /*
    * =====================
-   *  NEIGHBOUR FUNCTIONS
+   * NEIGHBOUR FUNCTIONS
    * =====================
    */
   public void setNeighbours(List<Field> neighbours) {
@@ -59,7 +65,7 @@ public class Field {
 
   /*
    * ==================
-   *  DOMAIN FUNCTIONS
+   * DOMAIN FUNCTIONS
    * ==================
    */
 
@@ -71,8 +77,13 @@ public class Field {
     return domain.size();
   }
 
-   /**
-   * Removes the given value from the domain, and possibly assigns the last value to the field.
+  public void setDomain(List<Integer> domain) {
+    this.domain = domain;
+  }
+
+  /**
+   * Removes the given value from the domain, and possibly assigns the last value
+   * to the field.
    * 
    * @param value
    * @return true if the value was removed
@@ -80,22 +91,23 @@ public class Field {
   public boolean removeFromDomain(int value) {
     boolean b = this.domain.remove(Integer.valueOf(value));
 
-    // If there is only one value left in the domain, sets the value of the field to the last domain value.
+    // If there is only one value left in the domain, sets the value of the field to
+    // the last domain value.
     if (domain.size() == 1) {
       setValue(domain.get(0));
     }
-    
+
     return b;
   }
 
   /*
    * ================
-   *  MISC FUNCTIONS
+   * MISC FUNCTIONS
    * ================
    */
 
   @Override
   public String toString() {
-    return (value==0)? "." : String.valueOf(value);
+    return (value == 0) ? "." : String.valueOf(value);
   }
 }

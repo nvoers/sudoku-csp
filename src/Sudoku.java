@@ -11,6 +11,16 @@ public class Sudoku {
     this.board = readsudoku(filename);
   }
 
+  Sudoku(Sudoku sudoku) {
+    this.board = new Field[9][9];
+    for (int i = 0; i < 9; i++) {
+      for (int j = 0; j < 9; j++) {
+        this.board[i][j] = new Field(sudoku.getBoard()[i][j]);
+      }
+    }
+    addNeighbours(this.board);
+  }
+
   @Override
   public String toString() {
     String output = "╔═══════╦═══════╦═══════╗\n";
