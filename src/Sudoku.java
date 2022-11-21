@@ -72,7 +72,29 @@ public class Sudoku {
    * @param grid
    */
   private static void addNeighbours(Field[][] grid) {
-    // TODO: for each field, add its neighbours
+    for (int x = 0; x < 9; x++) {
+      for (int y = 0; y < 9; y++) {
+        List<Field> neighbours = new ArrayList<>();
+        for (int i = 0; i < 9; i++) {
+          if (i != x) {
+            neighbours.add(grid[i][y]);
+          }
+          if (i != y) {
+            neighbours.add(grid[x][i]);
+          }
+        }
+        int xStart = (x / 3) * 3;
+        int yStart = (y / 3) * 3;
+        for (int i = xStart; i < xStart + 3; i++) {
+          for (int j = yStart; j < yStart + 3; j++) {
+            if (i != x && j != y) {
+              neighbours.add(grid[i][j]);
+            }
+          }
+        }
+        grid[x][y].setNeighbours(neighbours);
+      }
+    }
   }
 
   /**
